@@ -165,10 +165,7 @@ inode *cgc_FindDirEntry(inode *dir, char *fname) {
 			continue;
 		}
 
-		// allow the directory to to go past the MAX
-		// by one entry, but only if the dir->fsize
-		// variable indicates that an entry is valid
-		for (j = 0; j <= MAX_DIR_INODES && (j+1)*4 <= dir->fsize; j++) {
+		for (j = 0; j < MAX_DIR_INODES; j++) {
 			file = d->inodes[j];
 			if (!file) {
 				continue;
@@ -638,7 +635,7 @@ int cgc_mkdir(char *pathname) {
 	// update the parent directory
 	dir = (directory *)(dir_inode->blocks[0]);
 
-	for (i = 0; i <= MAX_DIR_INODES; i++) {
+	for (i = 0; i < MAX_DIR_INODES; i++) {
 		if (dir->inodes[i] == NULL) {
 			dir->inodes[i] = in;
 			// update the fsize value
@@ -649,7 +646,7 @@ int cgc_mkdir(char *pathname) {
 		}
 	}
 
-	if (i > MAX_DIR_INODES) {
+	if (i == MAX_DIR_INODES) {
 		// free inodes and data blocks previously allocated
 		while (in) {
 			last_inode = in;
@@ -1077,6 +1074,10 @@ cgc_size_t cgc_fwrite(const void *ptr, cgc_size_t size, cgc_size_t nmemb, FILE *
 	in2 = stream->curr_pos_inode;
 	index = stream->index;
 	b = in2->blocks[index];
+
+	if ( b == NULL) {
+		return (0);
+	}
 
 	b_index = stream->b_index;
 	for (i = 0; i < size*nmemb; i++) {
