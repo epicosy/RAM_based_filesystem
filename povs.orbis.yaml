@@ -13,6 +13,6 @@ CROMU_00009_2:
   path: "/usr/local/share/povs/RAM_based_filesystem"
   args: " --cores_path /cores --should_core"
   cases:
-    pov_2:
+    pov_1:
       order: 1
       file: "pov_2.pov"
