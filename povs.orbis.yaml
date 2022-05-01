@@ -7,6 +7,7 @@ CROMU_00009_1:
     pov_1:
       order: 1
       file: "pov_1.pov"
+      timeout: 0
 CROMU_00009_2:
   cwd: "/usr/local/share/pyshared/cgc"
   script: "python2 /usr/local/share/pyshared/cgc/cb-test.py"
@@ -16,3 +17,4 @@ CROMU_00009_2:
     pov_1:
       order: 1
       file: "pov_2.pov"
+      timeout: 1
